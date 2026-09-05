@@ -8,16 +8,17 @@ preprocessed = re.split(r'([,.:;?_!"()\']|--|\s)', raw_text)
 preprocessed = [item.strip() for item in preprocessed if item.strip()]
 print(len(preprocessed))
 
-#print(preprocessed[:30])
+all_tokens = sorted(list(set(preprocessed)))
+all_tokens.extend(["<|endoftext|>", "<|unk|>"])
 
-all_words = sorted(set(preprocessed))
-vocab_size = len(all_words)
+# all_words = sorted(set(preprocessed))
+vocab_size = len(all_tokens)
 print("Vocab Size:", vocab_size)
 
 
 # pg. 25
 # Creating a vocabulary
-vocab = {token:integer for integer,token in enumerate(all_words)}
+vocab = {token:integer for integer,token in enumerate(all_tokens)}
 
 tokenizer = SimpleTokenizerV1(vocab)
 
@@ -27,8 +28,7 @@ ids = tokenizer.encode(text)
 print(ids)
 print(tokenizer.decode(ids))
 
+print("--------------------------Break--------------------")
 
-#for i, item in enumerate(vocab.items()):
-#  print(item)
-#  if i >= 5000:
-#    break
+for i, item in enumerate(list(vocab.items())[-5:]) :
+    print(item)
