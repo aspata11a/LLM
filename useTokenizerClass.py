@@ -1,5 +1,6 @@
 import re
 from tokenizerClass import SimpleTokenizerV1
+from tokenizerClassV2 import SimpleTokenizerV2
 
 with open("the-verdict.txt", "r", encoding="utf-8") as f:
      raw_text = f.read()
@@ -20,15 +21,15 @@ print("Vocab Size:", vocab_size)
 # Creating a vocabulary
 vocab = {token:integer for integer,token in enumerate(all_tokens)}
 
-tokenizer = SimpleTokenizerV1(vocab)
+tokenizer = SimpleTokenizerV2(vocab)
 
-text = """"It's the last he painted, you know,"
-       Mrs. Gisburn said with pardonable pride."""
-ids = tokenizer.encode(text)
-print(ids)
-print(tokenizer.decode(ids))
+text1 = "Hello, do you like tea?"
+text2 = "In the sunlit terraces of the palace."
+text = " <|endoftext|> ".join((text1, text2)) 
 
-print("--------------------------Break--------------------")
+print(text)
 
-for i, item in enumerate(list(vocab.items())[-5:]) :
-    print(item)
+print(tokenizer.encode(text))
+#print(ids)
+print(tokenizer.decode(tokenizer.encode(text)))
+
